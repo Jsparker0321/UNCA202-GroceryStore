@@ -14,14 +14,20 @@ import java.util.ArrayList;
 
 public class GroceryStore {
 
-	ArrayList<Queue> lineOne = new ArrayList<Queue>();
-	ArrayList<Queue> lineTwo = new ArrayList<Queue>();
-	ArrayList<Queue> lineThree = new ArrayList<Queue>();
-	ArrayList<Queue> lineFour = new ArrayList<Queue>();
+	ArrayList<Queue> lineOne;
+	ArrayList<Queue> lineTwo; 
+	ArrayList<Queue> lineThree;
+	ArrayList<Queue> lineFour;
 	private int lines;
 
 	public GroceryStore(int lines) {
 		this.lines = lines;
+		
+		lineOne = new ArrayList<Queue>();
+		lineTwo = new ArrayList<Queue>();
+		lineThree = new ArrayList<Queue>();
+		lineFour = new ArrayList<Queue>();
+		
 	}
 
 	public void run(/** @param, @param, @param @param **/
