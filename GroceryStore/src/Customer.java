@@ -27,18 +27,23 @@ public class Customer {
 		return timeRemaining;
 	}
 	
-	public void decreaseTime() {
-		int totalTime; //Calculate how long it will take to process the cart
-		int itemsLeft; //Calculate how many items are left in the cart
-		int time; //Gives how much time is left based on how many items are left in cart
+	public int decreaseTime() {
+				
+		int totalTime = (getgroceryItems() * processCart);
+		int waitingToScan = (getgroceryItems() - 1);
 		
-		totalTime = (getgroceryItems() * processCart);
-		itemsLeft = (totalTime - processCart);
-		
-		
-		while( itemsLeft > 0) {
-			time = gettimeRemaining() - itemsLeft;
+		while(waitingToScan > 0 ) {
+			
+			int cartUpdate = groceryItems--;
+			int scannedItems = 0;
+			scannedItems++;
+			timeRemaining = totalTime - (scannedItems * processCart);
+			//int cart = (timeRemaining / processCart);
+			
+			
+			
 		}
+		return timeRemaining;
 		
 	}
 	 
