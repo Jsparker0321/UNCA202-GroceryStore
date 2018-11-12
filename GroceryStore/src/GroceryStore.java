@@ -1,3 +1,9 @@
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Queue;
+import java.util.Random;
+
+
 /**
  * 
  */
@@ -9,29 +15,43 @@
  * @version CSCI 202
  */
 
-import java.util.*;
-import java.util.ArrayList;
 
 public class GroceryStore {
 
-	ArrayList<Queue> lineOne;
-	ArrayList<Queue> lineTwo; 
-	ArrayList<Queue> lineThree;
-	ArrayList<Queue> lineFour;
-	private int lines;
+	ArrayList<Queue> line;
+	Random gen = new Random();	
+	private int maxItems = gen.nextInt(80) + 1; //A customer will not have more than 80 items
+	private int processCart = 3; //Fixed time it takes to scan and bag a single item
+	private int shiftDuration;
+	private double arrivalProbability = .50;
+	
 
 	public GroceryStore(int lines) {
-		this.lines = lines;
 		
-		lineOne = new ArrayList<Queue>();
-		lineTwo = new ArrayList<Queue>();
-		lineThree = new ArrayList<Queue>();
-		lineFour = new ArrayList<Queue>();
+		line = new ArrayList<>(lines);
+		ArrayDeque<Customer> person;
+		
+		for (int i = 0; i < lines; i++) {
+			
+			person =  new ArrayDeque<>();
+			line.add(person);
+		}
+		
+		
 		
 	}
 
-	public void run(/** @param, @param, @param @param **/
-	) {
+	public void run( int shiftDuration, double arrivalProbability, int processCart, int maxItems) {
+		
+		
+		
+		for (int time=0; time < shiftDuration; time++) {
+			if (gen.nextDouble() <= arrivalProbability) {
+				shortestQueue = getShortestQueue(); 
+				shortestQueue.enqueue(Customer);
+			}
+		}
+
 
 	}
 
