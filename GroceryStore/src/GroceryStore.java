@@ -25,7 +25,10 @@ public class GroceryStore {
 	private int shiftDuration;
 	private double arrivalProbability;
 	
-
+/**
+ * Initializes arraylist and creates a queue of type Customer
+ * @param lines : defines the number of lines in the grocery store
+ */
 	public GroceryStore(int lines) {
 		
 		line = new ArrayList<>(lines);
@@ -41,6 +44,10 @@ public class GroceryStore {
 		
 	}
 	
+	/**
+	 * Obtains the queues and uses a for loop to decide which queue is the shortest
+	 * @return : shortestQueue
+	 */
 	public Queue getShortestQueue() {
 		
 		Queue shortestQueue;
@@ -56,6 +63,13 @@ public class GroceryStore {
 		return shortestQueue;
 	}
 
+	/**
+	 * Creates how the simulation is to run and what things will be needed
+	 * @param shiftDuration : how long the simulation is to run
+	 * @param arrivalProbability : probability that a customer will arrive within the length of simulation
+	 * @param processCart : how long it takes to process (scan & bag) one item 
+	 * @param maxItems : Randomly generated number that controls how many grocery items a customer will have
+	 */
 	public void run( int shiftDuration, double arrivalProbability, int processCart, int maxItems) {
 		
 		this.shiftDuration = shiftDuration;
@@ -83,6 +97,9 @@ public class GroceryStore {
 
 	}
 
+	/**
+	 * Prints out the data to be shown on the console
+	 */
 	public void printData() {
 		  
 		 System.out.println("Duration of shift: " + shiftDuration); // (a) the number of time steps run: shiftduration
