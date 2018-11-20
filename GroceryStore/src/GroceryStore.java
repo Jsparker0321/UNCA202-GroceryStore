@@ -12,16 +12,19 @@ import java.util.Random;
  * @version October 30, 2018
  * @version A Grocery Store
  * @version CSCI 202
+ * @version attended tutoring
  */
 
 public class GroceryStore {
 
 	ArrayList<Queue> line;
 	Random gen = new Random();
-	private int maxItems; // A customer will not have more than 80 items
-	private int processCart; // Fixed time it takes to scan and bag a single item
+	private int maxItems; 
+	private int processCart; 
 	private int shiftDuration;
 	private double arrivalProbability;
+	private int customersServed = 0;
+	private int[] maxLength;
 
 	/**
 	 * Initializes arraylist and creates a queue of type Customer
@@ -38,7 +41,8 @@ public class GroceryStore {
 			person = new ArrayDeque<>();
 			line.add(person);
 		}
-
+		
+		maxLength = new int[lines];
 	}
 
 	/**
@@ -64,43 +68,61 @@ public class GroceryStore {
 	/**
 	 * Creates how the simulation is to run and what things will be needed
 	 * 
-	 * @param shiftDuration      : how long the simulation is to run
-	 * @param arrivalProbability : probability that a customer will arrive within
-	 *                           the length of simulation
-	 * @param processCart        : how long it takes to process (scan & bag) one
-	 *                           item
-	 * @param maxItems           : Randomly generated number that controls how many
-	 *                           grocery items a customer will have
+	 * @param shiftDuration
+	 *            : how long the simulation is to run
+	 * @param arrivalProbability
+	 *            : probability that a customer will arrive within the length of
+	 *            simulation
+	 * @param processCart
+	 *            : how long it takes to process (scan & bag) one item
+	 * @param maxItems
+	 *            : Randomly generated number that controls how many grocery items a
+	 *            customer will have
 	 */
 	public void run(int shiftDuration, double arrivalProbability, int processCart, int maxItems) {
 
 		this.shiftDuration = shiftDuration;
-		this.maxItems = maxItems; // A customer will not have more than 80 items
-		this.processCart = processCart; // Fixed time it takes to scan and bag a single item
+		this.maxItems = maxItems; 
+		this.processCart = processCart; 
 		this.arrivalProbability = arrivalProbability;
-		Customer one = new Customer(gen.nextInt(maxItems) + 1, processCart);
+		Customer one;
 
 		Queue shortestQueue;
 
-		for (int time = 0; time < shiftDuration; time++) {
-			if (gen.nextDouble() <= arrivalProbability) {
-				shortestQueue = getShortestQueue();
-				shortestQueue.add(one);
-			}
+		if (!line.isEmpty()) {
 
-			ArrayDeque<Customer> person;
-			if (maxItems == 0) {
-				person = new ArrayDeque<>();
-				person.remove();
-				System.out.println("A customer has left the store!");
+			for (int time = 0; time < shiftDuration; time++) {
+				if (gen.nextDouble() <= arrivalProbability) {
+					one = new Customer(gen.nextInt(maxItems) + 1, processCart);
+					shortestQueue = getShortestQueue();
+					shortestQueue.add(one);
+					maxLength[line.indexOf(shortestQueue)]++;
+				}
+
+				for (int i = 0; i < line.size(); i++) {
+					if (!line.get(i).isEmpty()) {
+
+						Customer shopper = (Customer) line.get(i).element();
+						shopper.decreaseTime();
+
+						if (shopper.gettimeRemaining() == 0) {
+
+							line.get(i).remove();
+
+							customersServed++;
+
+						}
+
+					}
+
+				}
 
 			}
+			printData();
+
+			line.clear();
 
 		}
-
-		// remove customer
-		// print
-		// reset
 
 	}
 
@@ -109,18 +131,26 @@ public class GroceryStore {
 	 */
 	public void printData() {
 
-		System.out.println("Duration of shift: " + shiftDuration); // (a) the number of time steps run: shiftduration
-		System.out.println("Checkout lines available: " + line); // (b) the number of lines: lines
-		System.out.println("Probability of a customer arriving: " + arrivalProbability); // (c) the customer arrival
-																							// probability:
-																							// arrivalProbability
-		System.out.println("Time it takes to scan and bag an item: " + processCart); // (d) the time per item:
-																						// processCart
-		System.out.println("Number of items in cart: " + maxItems); // (e) the maximum number of items: maxItems
-		// System.out.println("There are ); //(f) the maximum length of each queue: get
-		// length of queue: need a new array declare as global and use for loop
-		// (g) the number of customers left in each queue: get size of queue
-		// (h) the total number of customers served: new variable and increment
+		System.out.println("Duration of shift: " + shiftDuration);
+
+		System.out.println("Checkout lines available: " + line.size());
+
+		System.out.println("Probability of a customer arriving: " + arrivalProbability);
+
+		System.out.println("Time it takes to scan and bag an item: " + processCart);
+
+		System.out.println("Number of items in cart: " + maxItems);
+		
+		
+		for( int i = 0; i < line.size(); i++) {
+			System.out.println("Total customers line had: " + maxLength[i]);
+		}
+
+		for (int i = 0; i < line.size(); i++) {
+			System.out.println("Number of customers left in line: " + line.get( i).size());
+		}
+
+		System.out.println("Total number of customers checked out: " + customersServed);
 
 	}
 }

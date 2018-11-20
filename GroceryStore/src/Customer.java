@@ -4,13 +4,14 @@ import java.util.Random;
  * @version October 30, 2018
  * @version Project #3: A Grocery Store
  * @version CSCI 202
+ * @version attended tutoring
  *
  */
 public class Customer {
 	
 	
-	private int groceryItems; //Number of groceries
-	private int timeRemaining; //How much time is left
+	private int groceryItems;
+	private int timeRemaining; 
 	
 	/**
 	 * Defining what a customer is
